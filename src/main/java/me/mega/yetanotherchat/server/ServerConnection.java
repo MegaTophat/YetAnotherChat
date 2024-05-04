@@ -13,9 +13,9 @@ import io.netty.channel.epoll.EpollServerSocketChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import me.mega.yetanotherchat.network.ProtocolDirection;
-import me.mega.yetanotherchat.network.server.HandshakeHandler;
+import me.mega.yetanotherchat.network.handshake.server.ServerHandshakeHandler;
 import me.mega.yetanotherchat.network.NetworkManager;
-import me.mega.yetanotherchat.packet.PacketDecoder;
+import me.mega.yetanotherchat.network.PacketDecoder;
 
 import java.net.InetAddress;
 import java.util.List;
@@ -42,7 +42,7 @@ public final class ServerConnection {
                 channel.pipeline().addLast("decoder", new PacketDecoder(ProtocolDirection.SERVERBOUNDED));
                 ServerConnection.this.networkManagers.add(networkManager);
                 channel.pipeline().addLast("packet_handler", networkManager);
-                networkManager.setPacketListener(new HandshakeHandler(ServerConnection.this.yacServer, networkManager));
+                networkManager.setPacketListener(new ServerHandshakeHandler(ServerConnection.this.yacServer, networkManager));
             }
         }).group(getEventLoopGroup()).localAddress(bindAddress, bindPort).bind().syncUninterruptibly();
     }

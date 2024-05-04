@@ -1,19 +1,18 @@
-package me.mega.yetanotherchat.network.server;
+package me.mega.yetanotherchat.network.handshake.server;
 
 import me.mega.yetanotherchat.network.NetworkManager;
 import me.mega.yetanotherchat.network.UserConnection;
-import me.mega.yetanotherchat.packet.PacketHandshakingInHandler;
-import me.mega.yetanotherchat.packet.PacketHandshakingInStart;
-import me.mega.yetanotherchat.packet.PacketHandshakingOutDisconnect;
-import me.mega.yetanotherchat.packet.PacketHandshakingOutReady;
+import me.mega.yetanotherchat.network.handshake.server.packet.PacketHandshakingInStart;
+import me.mega.yetanotherchat.network.handshake.client.packet.PacketHandshakingOutDisconnect;
+import me.mega.yetanotherchat.network.handshake.client.packet.PacketHandshakingOutReady;
 import me.mega.yetanotherchat.server.YacServer;
 
-public class HandshakeHandler implements PacketHandshakingInHandler {
+public class ServerHandshakeHandler implements PacketHandlerHandshakingIn {
     private final YacServer yacServer;
     private final NetworkManager networkManager;
     private HandshakeState currentState;
 
-    public HandshakeHandler(final YacServer yacServer, final NetworkManager networkManager) {
+    public ServerHandshakeHandler(final YacServer yacServer, final NetworkManager networkManager) {
         this.yacServer = yacServer;
         this.networkManager = networkManager;
         this.currentState = HandshakeState.HELLO;

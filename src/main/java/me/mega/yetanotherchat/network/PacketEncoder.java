@@ -1,11 +1,8 @@
-package me.mega.yetanotherchat.packet;
+package me.mega.yetanotherchat.network;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
-import me.mega.yetanotherchat.network.NetworkManager;
-import me.mega.yetanotherchat.network.Protocol;
-import me.mega.yetanotherchat.network.ProtocolDirection;
 
 import java.io.IOException;
 

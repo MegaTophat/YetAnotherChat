@@ -1,7 +1,7 @@
 package me.mega.yetanotherchat.network;
 
-import me.mega.yetanotherchat.packet.PacketChatInMessage;
-import me.mega.yetanotherchat.packet.PacketHandlerChatIn;
+import me.mega.yetanotherchat.network.chat.server.packet.PacketChatInMessage;
+import me.mega.yetanotherchat.network.chat.server.PacketHandlerChatIn;
 import me.mega.yetanotherchat.server.YacServer;
 
 public class UserConnection implements PacketHandlerChatIn {

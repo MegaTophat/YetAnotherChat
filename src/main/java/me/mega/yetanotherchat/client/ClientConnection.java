@@ -11,11 +11,11 @@ import io.netty.channel.epoll.EpollEventLoopGroup;
 import io.netty.channel.epoll.EpollServerSocketChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import me.mega.yetanotherchat.network.client.HandshakeHandler;
+import me.mega.yetanotherchat.network.handshake.client.ClientHandshakeHandler;
 import me.mega.yetanotherchat.network.NetworkManager;
 import me.mega.yetanotherchat.network.ProtocolDirection;
-import me.mega.yetanotherchat.packet.PacketDecoder;
-import me.mega.yetanotherchat.packet.PacketEncoder;
+import me.mega.yetanotherchat.network.PacketDecoder;
+import me.mega.yetanotherchat.network.PacketEncoder;
 
 import java.net.InetAddress;
 
@@ -40,7 +40,7 @@ public class ClientConnection {
                         .addLast("decoder", new PacketDecoder(ProtocolDirection.CLIENTBOUNDED))
                         .addLast("encoder", new PacketEncoder(ProtocolDirection.SERVERBOUNDED))
                         .addLast("packet_handler", networkManager);
-                networkManager.setPacketListener(new HandshakeHandler(ClientConnection.this.yacClient, networkManager));
+                networkManager.setPacketListener(new ClientHandshakeHandler(ClientConnection.this.yacClient, networkManager));
             }
         }).connect(ip, port).syncUninterruptibly();
     }

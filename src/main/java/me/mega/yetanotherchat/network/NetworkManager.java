@@ -6,8 +6,6 @@ import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.AttributeKey;
-import me.mega.yetanotherchat.packet.Packet;
-import me.mega.yetanotherchat.packet.PacketHandler;
 
 import java.net.SocketAddress;
 

@@ -1,4 +1,4 @@
-package me.mega.yetanotherchat.packet;
+package me.mega.yetanotherchat.network;
 
 import com.google.common.base.Charsets;
 import io.netty.buffer.ByteBuf;
