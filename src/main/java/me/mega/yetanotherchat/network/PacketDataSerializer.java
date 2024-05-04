@@ -35,7 +35,11 @@ public final class PacketDataSerializer extends ByteBuf {
             throw new DecoderException("Received String has negative length?");
         }
 
-        final String decodedString = new String(this.readBytes(stringLength).array(), Charsets.UTF_8);
+        final byte[] stringBuffer = new byte[stringLength];
+
+        this.readBytes(stringBuffer);
+
+        final String decodedString = new String(stringBuffer, Charsets.UTF_8);
 
         if (decodedString.length() > maxLength) {
             throw new DecoderException("Received String too long!");

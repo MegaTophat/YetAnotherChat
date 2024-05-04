@@ -12,6 +12,9 @@ import io.netty.channel.epoll.EpollEventLoopGroup;
 import io.netty.channel.epoll.EpollServerSocketChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import me.mega.yetanotherchat.network.PacketEncoder;
+import me.mega.yetanotherchat.network.PacketPreparer;
+import me.mega.yetanotherchat.network.PacketPrepender;
 import me.mega.yetanotherchat.network.ProtocolDirection;
 import me.mega.yetanotherchat.network.handshake.server.ServerHandshakeHandler;
 import me.mega.yetanotherchat.network.NetworkManager;
@@ -39,10 +42,14 @@ public final class ServerConnection {
             protected void initChannel(final Channel channel) {
                 final NetworkManager networkManager = new NetworkManager();
 
-                channel.pipeline().addLast("decoder", new PacketDecoder(ProtocolDirection.SERVERBOUNDED));
+                channel.pipeline()
+                        .addLast("preparer", new PacketPreparer())
+                        .addLast("decoder", new PacketDecoder(ProtocolDirection.SERVERBOUNDED))
+                        .addLast("prepender", new PacketPrepender())
+                        .addLast("encoder", new PacketEncoder(ProtocolDirection.CLIENTBOUNDED))
+                        .addLast("packet_handler", networkManager);
                 ServerConnection.this.networkManagers.add(networkManager);
-                channel.pipeline().addLast("packet_handler", networkManager);
-                networkManager.setPacketListener(new ServerHandshakeHandler(ServerConnection.this.yacServer, networkManager));
+                networkManager.setPacketHandler(new ServerHandshakeHandler(ServerConnection.this.yacServer, networkManager));
             }
         }).group(getEventLoopGroup()).localAddress(bindAddress, bindPort).bind().syncUninterruptibly();
     }

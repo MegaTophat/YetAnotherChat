@@ -9,19 +9,23 @@ import io.netty.util.AttributeKey;
 
 import java.net.SocketAddress;
 
-public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
+public class NetworkManager extends SimpleChannelInboundHandler<Packet<PacketHandler>> {
+    public static final int PROTOCOL_VERSION = 1;
     public static final AttributeKey<Protocol> currentProtocol;
-    private Channel channel;
-    private SocketAddress socketAddress;
-    private PacketHandler packetHandler;
 
     static {
         currentProtocol = AttributeKey.valueOf("protocol");
     }
 
-    @Override
-    protected void channelRead0(final ChannelHandlerContext ctx, final Packet msg) {
+    private Channel channel;
+    private SocketAddress socketAddress;
+    private PacketHandler packetHandler;
 
+    @Override
+    protected void channelRead0(final ChannelHandlerContext ctx, final Packet<PacketHandler> msg) {
+        if (this.channel.isOpen()) {
+            msg.handle(this.packetHandler);
+        }
     }
 
     @SuppressWarnings("ProhibitedExceptionDeclared") //Exception is from super class!
@@ -43,9 +47,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
         this.channel.attr(currentProtocol).set(protocol);
     }
 
-    public void handle(final Packet<?> packet) {
-        final Protocol protocol = Protocol.getAssociatedState(packet);
-
+    public void sendPacket(final Packet<?> packet) {
         if (this.channel.eventLoop().inEventLoop()) {
             final ChannelFuture channelFuture = this.channel.writeAndFlush(packet);
 
@@ -67,7 +69,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
         this.channel.close().awaitUninterruptibly();
     }
 
-    public void setPacketListener(final PacketHandler packetHandler) {
+    public void setPacketHandler(final PacketHandler packetHandler) {
         this.packetHandler = packetHandler;
     }
 }

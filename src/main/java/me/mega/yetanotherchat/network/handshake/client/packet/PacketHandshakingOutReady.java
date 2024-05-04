@@ -19,7 +19,7 @@ public class PacketHandshakingOutReady implements Packet<PacketHandlerHandshakin
     }
 
     @Override
-    public void handle(final PacketHandlerHandshakingOut packetListener) {
-        packetListener.handle(this);
+    public void handle(final PacketHandlerHandshakingOut packetHandler) {
+        packetHandler.handle(this);
     }
 }

@@ -5,7 +5,6 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 public final class YacServer {
-    public static final int PROTOCOL_VERSION = 1;
     private final ServerConnection serverConnection;
     private volatile boolean running;
 
@@ -19,6 +18,7 @@ public final class YacServer {
         final int listenPort = 6000;
 
         final YacServer yacServer = new YacServer(listenAddress, listenPort);
+        System.out.println("Server listening on port: " + listenPort);
 
         while (yacServer.running) {
             try {

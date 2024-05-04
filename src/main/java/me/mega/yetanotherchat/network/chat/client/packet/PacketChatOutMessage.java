@@ -17,7 +17,7 @@ public class PacketChatOutMessage implements Packet<PacketHandlerChatOut> {
     }
 
     @Override
-    public void handle(final PacketHandlerChatOut packetListener) {
-        packetListener.handle(this);
+    public void handle(final PacketHandlerChatOut packetHandler) {
+        packetHandler.handle(this);
     }
 }

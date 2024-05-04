@@ -25,7 +25,7 @@ public class PacketHandshakingOutDisconnect implements Packet<PacketHandlerHands
     }
 
     @Override
-    public void handle(final PacketHandlerHandshakingOut packetHandshakingOutListener) {
-        packetHandshakingOutListener.handle(this);
+    public void handle(final PacketHandlerHandshakingOut packetHandler) {
+        packetHandler.handle(this);
     }
 }

@@ -7,13 +7,15 @@ import io.netty.handler.codec.MessageToByteEncoder;
 
 public class PacketPrepender extends MessageToByteEncoder<ByteBuf> {
     private static final byte NUM_PREPEND_BYTES = Short.BYTES;
+    private static final int MAX_MESSAGE_BYTES = (Short.MAX_VALUE + 1) * 2; // 2^16
 
     @Override
     public void encode(final ChannelHandlerContext ctx, final ByteBuf msg, final ByteBuf out) {
+        System.out.println("length prefixing a message");
         final int readableBytes = msg.readableBytes();
 
-        if (readableBytes > NUM_PREPEND_BYTES) {
-            throw new EncoderException("message to big to length prefix with 2 bytes");
+        if (readableBytes > MAX_MESSAGE_BYTES) {
+            throw new EncoderException("message too big to length prefix with 2 bytes");
         }
 
         out.ensureWritable(readableBytes + NUM_PREPEND_BYTES);

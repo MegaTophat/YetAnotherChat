@@ -27,7 +27,7 @@ public class ClientHandshakeHandler implements PacketHandlerHandshakingOut {
     @Override
     public void handle(final PacketHandshakingOutReady packetHandshakingOutReady) {
         System.out.println("Server accepted our handshake! We're doing nothing for now though");
-        this.networkManager.setPacketListener(new ClientChatHandler(this.yacClient, this.networkManager));
+        this.networkManager.setPacketHandler(new ClientChatHandler(this.yacClient, this.networkManager));
 
     }
 

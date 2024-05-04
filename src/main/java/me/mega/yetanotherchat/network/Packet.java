@@ -7,7 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 public interface Packet<T extends PacketHandler> {
     void writeData(final PacketDataSerializer packetDataSerializer) throws IOException;
 
-    void handle(final T packetListener);
+    void handle(final T packetHandler);
 
     static Packet<?> readData(final PacketDataSerializer packetDataSerializer, final Class<? extends Packet<?>> packetClass) {
         if (packetClass == null) {

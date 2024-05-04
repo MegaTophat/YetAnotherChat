@@ -22,21 +22,29 @@ public class ServerHandshakeHandler implements PacketHandlerHandshakingIn {
     public void handle(final PacketHandshakingInStart packetHandshakingInStart) {
         final int protocolVersion = packetHandshakingInStart.getProtocolVersion();
 
-        if (protocolVersion > YacServer.PROTOCOL_VERSION) {
-            this.networkManager.handle(new PacketHandshakingOutDisconnect("Unsupported version! This server hasn't updated yet!"));
+        if (protocolVersion > NetworkManager.PROTOCOL_VERSION) {
+            this.networkManager.sendPacket(new PacketHandshakingOutDisconnect("Unsupported version! This server hasn't updated yet!"));
             this.networkManager.close();
 
             return;
         }
-        if (protocolVersion < YacServer.PROTOCOL_VERSION) {
-            this.networkManager.handle(new PacketHandshakingOutDisconnect("Unsupported version! Your client is out of date!"));
+        if (protocolVersion < NetworkManager.PROTOCOL_VERSION) {
+            this.networkManager.sendPacket(new PacketHandshakingOutDisconnect("Unsupported version! Your client is out of date!"));
             this.networkManager.close();
 
             return;
         }
 
-        this.networkManager.handle(new PacketHandshakingOutReady());
-        this.networkManager.setPacketListener(new UserConnection(this.yacServer, this.networkManager));
+        this.networkManager.sendPacket(new PacketHandshakingOutDisconnect("test"));
+        this.networkManager.close();
+        System.out.println("closed connection");
+
+        if (true) {
+            return;
+        }
+
+        this.networkManager.sendPacket(new PacketHandshakingOutReady());
+        this.networkManager.setPacketHandler(new UserConnection(this.yacServer, this.networkManager));
     }
 
     private enum HandshakeState {
