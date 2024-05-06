@@ -2,6 +2,13 @@ package me.mega.yetanotherchat.network;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import me.mega.yetanotherchat.network.chat.server.packet.PacketChatInRequestChannels;
+import me.mega.yetanotherchat.network.chat.client.packet.PacketChatOutMessage;
+import me.mega.yetanotherchat.network.chat.client.packet.PacketChatOutSystemMessage;
+import me.mega.yetanotherchat.network.chat.server.packet.PacketChatInCommand;
+import me.mega.yetanotherchat.network.chat.server.packet.PacketChatInMessage;
+import me.mega.yetanotherchat.network.chat.client.packet.PacketChatOutChannelsResponse;
+import me.mega.yetanotherchat.network.chat.server.packet.PacketChatInRequestJoinChannel;
 import me.mega.yetanotherchat.network.handshake.server.packet.PacketHandshakingInStart;
 import me.mega.yetanotherchat.network.handshake.client.packet.PacketHandshakingOutDisconnect;
 import me.mega.yetanotherchat.network.handshake.client.packet.PacketHandshakingOutReady;
@@ -18,6 +25,17 @@ public enum Protocol {
             this.registerPacket(ProtocolDirection.SERVERBOUNDED, PacketHandshakingInStart.class);
             this.registerPacket(ProtocolDirection.CLIENTBOUNDED, PacketHandshakingOutDisconnect.class);
             this.registerPacket(ProtocolDirection.CLIENTBOUNDED, PacketHandshakingOutReady.class);
+        }
+    },
+    CHAT(1) {
+        {
+            this.registerPacket(ProtocolDirection.SERVERBOUNDED, PacketChatInMessage.class);
+            this.registerPacket(ProtocolDirection.SERVERBOUNDED, PacketChatInRequestJoinChannel.class);
+            this.registerPacket(ProtocolDirection.SERVERBOUNDED, PacketChatInCommand.class);
+            this.registerPacket(ProtocolDirection.SERVERBOUNDED, PacketChatOutChannelsResponse.class);
+            this.registerPacket(ProtocolDirection.CLIENTBOUNDED, PacketChatInRequestChannels.class);
+            this.registerPacket(ProtocolDirection.CLIENTBOUNDED, PacketChatOutMessage.class);
+            this.registerPacket(ProtocolDirection.CLIENTBOUNDED, PacketChatOutSystemMessage.class);
         }
     };
 

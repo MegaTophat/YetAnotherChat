@@ -12,6 +12,7 @@ import io.netty.channel.epoll.EpollEventLoopGroup;
 import io.netty.channel.epoll.EpollServerSocketChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import me.mega.yetanotherchat.network.Packet;
 import me.mega.yetanotherchat.network.PacketEncoder;
 import me.mega.yetanotherchat.network.PacketPreparer;
 import me.mega.yetanotherchat.network.PacketPrepender;
@@ -52,6 +53,10 @@ public final class ServerConnection {
                 networkManager.setPacketHandler(new ServerHandshakeHandler(ServerConnection.this.yacServer, networkManager));
             }
         }).group(getEventLoopGroup()).localAddress(bindAddress, bindPort).bind().syncUninterruptibly();
+    }
+
+    public void sendPacketToAll(final Packet<?> packet) {
+        this.networkManagers.forEach(networkManager -> networkManager.sendPacket(packet));
     }
 
     public void closeListener() {

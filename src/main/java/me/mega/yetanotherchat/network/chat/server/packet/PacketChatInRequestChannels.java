@@ -6,24 +6,13 @@ import me.mega.yetanotherchat.network.chat.server.PacketHandlerChatIn;
 
 import java.io.IOException;
 
-public class PacketChatInCommand implements Packet<PacketHandlerChatIn> {
-    private final String command;
+public class PacketChatInRequestChannels implements Packet<PacketHandlerChatIn> {
+    public PacketChatInRequestChannels(final PacketDataSerializer packetDataSerializer) {
 
-    public PacketChatInCommand(final PacketDataSerializer packetDataSerializer) {
-        this.command = packetDataSerializer.readString(Short.MAX_VALUE);
     }
-
-    public PacketChatInCommand(final String command) {
-        this.command = command;
-    }
-
-    public String getCommand() {
-        return this.command;
-    }
-
     @Override
     public void writeData(final PacketDataSerializer packetDataSerializer) throws IOException {
-        packetDataSerializer.writeString(this.command);
+
     }
 
     @Override

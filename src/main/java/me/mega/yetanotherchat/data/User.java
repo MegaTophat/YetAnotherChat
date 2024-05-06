@@ -1,21 +1,32 @@
 package me.mega.yetanotherchat.data;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class User {
-    private final List<Permission> permissions;
+    private boolean isAdmin;
+
+    public String getName() {
+        return name;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
     private String name;
 
-    public User() {
-        this.permissions = new ArrayList<>();
+    public User(final String name, final boolean isAdmin) {
+        this.isAdmin = isAdmin;
+        this.name = name;
+    }
+
+    public void setAdmin(final boolean admin) {
+        isAdmin = admin;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
     }
 
     public void connectRequest(final Server server) {
-
-    }
-
-    public void sendMessage(final Message message) {
 
     }
 

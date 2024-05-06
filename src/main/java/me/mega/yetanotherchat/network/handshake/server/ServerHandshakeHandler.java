@@ -1,11 +1,15 @@
 package me.mega.yetanotherchat.network.handshake.server;
 
+import me.mega.yetanotherchat.data.Channel;
 import me.mega.yetanotherchat.network.NetworkManager;
 import me.mega.yetanotherchat.network.UserConnection;
+import me.mega.yetanotherchat.network.chat.client.packet.PacketChatOutChannelsResponse;
 import me.mega.yetanotherchat.network.handshake.server.packet.PacketHandshakingInStart;
 import me.mega.yetanotherchat.network.handshake.client.packet.PacketHandshakingOutDisconnect;
 import me.mega.yetanotherchat.network.handshake.client.packet.PacketHandshakingOutReady;
 import me.mega.yetanotherchat.server.YacServer;
+
+import java.util.List;
 
 public class ServerHandshakeHandler implements PacketHandlerHandshakingIn {
     private final YacServer yacServer;
@@ -35,16 +39,9 @@ public class ServerHandshakeHandler implements PacketHandlerHandshakingIn {
             return;
         }
 
-        this.networkManager.sendPacket(new PacketHandshakingOutDisconnect("test"));
-        this.networkManager.close();
-        System.out.println("closed connection");
-
-        if (true) {
-            return;
-        }
-
         this.networkManager.sendPacket(new PacketHandshakingOutReady());
         this.networkManager.setPacketHandler(new UserConnection(this.yacServer, this.networkManager));
+        this.networkManager.sendPacket(new PacketChatOutChannelsResponse(List.of(new Channel("default"))));
     }
 
     private enum HandshakeState {

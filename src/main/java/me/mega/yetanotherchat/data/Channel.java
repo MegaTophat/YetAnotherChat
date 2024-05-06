@@ -17,12 +17,12 @@ public class Channel {
         this.userLimit = DEFUALT_USER_LIMIT;
     }
 
-    public void join(final User user) {
-        this.users.add(user);
+    public String getChannelName() {
+        return this.channelName;
     }
 
-    public void postMessage(final Message message) {
-        //broadcast Packet to all clients
+    public void join(final User user) {
+        this.users.add(user);
     }
 
     public void terminate() {

@@ -13,6 +13,10 @@ public final class YacServer {
         this.running = true;
     }
 
+    public ServerConnection getServerConnection() {
+        return this.serverConnection;
+    }
+
     public static void main(final String[] args) throws IOException, UnknownHostException {
         final InetAddress listenAddress = InetAddress.getLoopbackAddress();
         final int listenPort = 6000;

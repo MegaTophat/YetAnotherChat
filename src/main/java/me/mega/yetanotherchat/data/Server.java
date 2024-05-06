@@ -5,27 +5,17 @@ import java.util.List;
 
 public class Server {
     private final List<User> connectedClients;
-    private final List<Message> messagePostQueue;
     private final List<Channel> channels;
     private final int port;
 
     public Server(final int port) {
         this.port = port;
         this.connectedClients = new ArrayList<>();
-        this.messagePostQueue = new ArrayList<>();
         this.channels = new ArrayList<>();
     }
 
     public void connectUser(final User user) {
         this.connectedClients.add(user);
-    }
-
-    public void receiveMessage(final Message message) {
-        this.messagePostQueue.add(message);
-    }
-
-    public void postMessage(final Message message) {
-        //broadcast to connected clients
     }
 
     public void verify(final User user) {
