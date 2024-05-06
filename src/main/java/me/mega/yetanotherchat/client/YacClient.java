@@ -1,6 +1,5 @@
 package me.mega.yetanotherchat.client;
 
-import java.io.IOException;
 import java.net.InetAddress;
 
 public final class YacClient {
